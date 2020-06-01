@@ -45,10 +45,30 @@ $router->group(['prefix' => 'patient'], function() use ($router) {
     $router->post('/register', ['as' => 'patient.register', 'uses' => 'PatientController@register']);
 
     $router->get('/{id}', ['as' => 'patient.find', 'uses' => 'PatientController@getPatientInfo']);
+
+    $router->get('/', ['as' => 'patient.all', 'uses' => 'PatientController@getAll']);
 });
 
 $router->group(['prefix' => 'assessment'], function() use ($router) {
     $router->post('/insert', ['as' => 'assessment.insert', 'uses' => 'AssessmentController@insert']);
 
     $router->get('/{id}', ['as' => 'assessment.find', 'uses' => 'AssessmentController@get']);
+
+    $router->get('/', ['as' => 'assessment.all', 'uses' => 'AssessmentController@getAll']);
+});
+
+$router->group(['prefix' => 'treatment'], function() use ($router) {
+    $router->post('/insert', ['as' => 'treatment.insert', 'uses' => 'TreatmentLogController@insert']);
+
+    $router->get('/{id}', ['as' => 'treatment.get', 'uses' => 'TreatmentLogController@get']);
+
+    $router->get('/', ['as' => 'treatment.all', 'uses' => 'TreatmentLogController@getAll']);
+});
+
+$router->group(['prefix' => 'implement'], function() use ($router) {
+    $router->get('/', ['as' => 'treatment.implement.all', 'uses' => 'TreatmentImplementLogController@getAll']);
+
+    $router->post('/insert', ['as' => 'treatment.implement.insert', 'uses' => 'TreatmentImplementLogController@insert']);
+
+    $router->get('/{id}', ['as' => 'treatment.implement.get', 'uses' => 'TreatmentImplementLogController@get']);
 });

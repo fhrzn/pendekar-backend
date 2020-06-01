@@ -58,11 +58,12 @@ class UserController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 // put this token on Authorization header
                 $apiToken = base64_encode($user);
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Login Success',
-                    'data' => $apiToken
-                ], 200); 
+                // return response()->json([
+                //     'success' => true,
+                //     'message' => 'Login Success',
+                //     'data' => $apiToken
+                // ], 200); 
+                return response()->json($apiToken, 200);
                 // cara untuk decode, cocokkan id dan password
                 // dd(json_decode(base64_decode($apiToken)));
                 

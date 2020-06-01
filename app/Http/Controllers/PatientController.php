@@ -67,4 +67,22 @@ class PatientController extends Controller
             ], 404);
         }
     }
+
+    public function getAll()
+    {
+        $patient = Patient::all();
+
+        if ($patient) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Patient found.',
+                'data' => $patient
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Patient not found.'
+            ], 404);
+        }
+    }
 }

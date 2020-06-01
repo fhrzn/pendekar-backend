@@ -149,4 +149,22 @@ class AssessmentController extends Controller
             ], 404);
         }
     }
+
+    public function getAll()
+    {
+        $asssessment = Assessment::all();
+
+        if ($asssessment) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Assessment found.',
+                'data' => $asssessment
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => ' Assessment not found'
+            ], 400);
+        }
+    }
 }
