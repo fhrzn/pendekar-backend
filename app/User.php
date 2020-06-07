@@ -32,4 +32,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         // 'password',
     ];
 
+    public function treatmentLog()
+    {
+        return $this->hasMany('App\TreatmentLog');
+    }
+
 }

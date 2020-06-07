@@ -15,7 +15,7 @@ class TreatmentImplementLog extends Model
      * @var array
      */
     protected $fillable = [
-        'treatment_logs_id',
+        'treatment_log_id',
         'action',
         'action_date',
         'action_time'

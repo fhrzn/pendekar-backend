@@ -15,7 +15,7 @@ class TreatmentLog extends Model
      * @var array
      */
     protected $fillable = [
-        'users_id',
+        'user_id',
         'treatment_date',
         'treatment_time',
         'result_subjective',
@@ -29,12 +29,10 @@ class TreatmentLog extends Model
         'result_presence_of_mind',
         'result_urine_total',
         'result_urine_color',
-        // 'result_objective_complaint',
-        // 'result_subjective_complaint',
         'result_assessment_problem',
         'result_intervention',
-        'assessments_id',
-        'patients_id'
+        'assessment_id',
+        'patient_id'
     ];
 
     /**
@@ -45,6 +43,13 @@ class TreatmentLog extends Model
     // protected $hidden = [
     //     'password',
     // ];
+
+    protected $with = ['treatmentImplementLog'];
+
+    public function treatmentImplementLog()
+    {
+        return $this->hasMany('App\TreatmentImplementLog');
+    }
 
     public function user()
     {

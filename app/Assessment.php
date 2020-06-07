@@ -15,7 +15,7 @@ class Assessment extends Model
      * @var array
      */
     protected $fillable = [
-        'patients_id',
+        'patient_id',
         'date_enter_room',
         'time_enter_room',
         'time_assessment',
@@ -106,7 +106,7 @@ class Assessment extends Model
         'result_problems_treatment',
         'date_assessment_complete',
         'time_assessment_complete',
-        'users_id',
+        'user_id',
         'result_diagnose_treatment',
         'result_goal_treatment',
         'result_indicator_treatment',

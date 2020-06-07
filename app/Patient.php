@@ -15,7 +15,7 @@ class Patient extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'name', 'date_of_birth', 'old', 'address'
+        'id', 'name', 'date_of_birth', 'old', 'address', 'status'
     ];
 
     /**
@@ -26,4 +26,14 @@ class Patient extends Model
     // protected $hidden = [
     //     'password',
     // ];
+
+    public function assessment()
+    {
+        return $this->hasMany('App\Assessment');
+    }
+
+    public function treatment()
+    {
+        return $this->hasMany('App\TreatmentLog');
+    }
 }

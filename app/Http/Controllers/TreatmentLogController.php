@@ -19,8 +19,10 @@ class TreatmentLogController extends Controller
 
     public function insert(Request $request)
     {
+        $token = json_decode(base64_decode(explode(' ', $request->header('Authorization'))[1]));
+        // dd($request);
         $response = TreatmentLog::create([
-            'users_id' => $request->users_id,
+            'user_id' => $token->id,
             'treatment_date' => $request->treatment_date,
             'treatment_time' => $request->treatment_time,
             'result_subjective' => $request->result_subjective,
@@ -34,12 +36,10 @@ class TreatmentLogController extends Controller
             'result_presence_of_mind' => $request->result_presence_of_mind,
             'result_urine_total' => $request->result_urine_total,
             'result_urine_color' => $request->result_urine_color,
-            // 'result_objective_complaint' => $request->result_objective_complaint,
-            // 'result_subjective_complaint' => $request->result_subjective_complaint,
             'result_assessment_problem' =>$request->result_assessment_problem,
             'result_intervention' => $request->result_intervention,
-            'assessments_id' => $request->assessments_id,
-            'patients_id' => $request->patients_id
+            'assessment_id' => $request->assessment_id,
+            'patient_id' => $request->patient_id
         ]);
 
         if ($response) {
@@ -63,7 +63,7 @@ class TreatmentLogController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Treatment log found.',
-                'data' => $treatment
+                'data' => $treatment->load('user')
             ], 200);
         } else {
             return response()->json([

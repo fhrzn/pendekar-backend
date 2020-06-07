@@ -47,6 +47,12 @@ $router->group(['prefix' => 'patient'], function() use ($router) {
     $router->get('/{id}', ['as' => 'patient.find', 'uses' => 'PatientController@getPatientInfo']);
 
     $router->get('/', ['as' => 'patient.all', 'uses' => 'PatientController@getAll']);
+    
+    $router->get('/{patientId}/treatment', ['as' => 'patient.treatment', 'uses' => 'PatientController@getPatientTreatment']);
+
+    $router->get('/{patientId}/assessment', ['as' => 'patient.assessment', 'uses' => 'PatientController@getPatientAssessment']);
+
+    $router->post('/{id}/status/update', ['as' => 'patient.status', 'uses' => 'PatientController@updatePatientStatus']);
 });
 
 $router->group(['prefix' => 'assessment'], function() use ($router) {
@@ -63,6 +69,7 @@ $router->group(['prefix' => 'treatment'], function() use ($router) {
     $router->get('/{id}', ['as' => 'treatment.get', 'uses' => 'TreatmentLogController@get']);
 
     $router->get('/', ['as' => 'treatment.all', 'uses' => 'TreatmentLogController@getAll']);
+
 });
 
 $router->group(['prefix' => 'implement'], function() use ($router) {

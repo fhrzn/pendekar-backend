@@ -64,9 +64,7 @@ class UserController extends Controller
                 //     'data' => $apiToken
                 // ], 200); 
                 return response()->json($apiToken, 200);
-                // cara untuk decode, cocokkan id dan password
-                // dd(json_decode(base64_decode($apiToken)));
-                
+                                
             } else {
                 return response()->json([
                     'success' => false,

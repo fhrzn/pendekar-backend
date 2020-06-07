@@ -19,12 +19,27 @@ class TreatmentImplementLogController extends Controller
 
     public function insert(Request $request)
     {
-        $response = TreatmentImplementLog::create([
-            'treatment_logs_id' => $request->treatment_logs_id,
-            'action' => $request->action,
-            'action_date' => $request->action_date,
-            'action_time' => $request->action_time
-        ]);
+        // dd(json_decode($request->getContent(), true));
+        $action_list = [];
+        foreach (json_decode($request->getContent(), true) as $a) {        
+            $action_list[] = [
+                'treatment_log_id' => $a["treatment_log_id"],
+                'action' => $a["action"],
+                'action_date' => $a["action_date"],
+                'action_time' => $a["action_time"]
+            ];
+        }
+
+        
+
+        // $response = TreatmentImplementLog::create([
+        //     'treatment_log_id' => $request->treatment_log_id,
+        //     'action' => $request->action,
+        //     'action_date' => $request->action_date,
+        //     'action_time' => $request->action_time
+        // ]);
+
+        $response = TreatmentImplementLog::insert($action_list);
 
         if ($response) {
             return response()->json([

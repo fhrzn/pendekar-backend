@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use \Illuminate\Http\Request;
 use App\Assessment;
+use App\TreatmentLog;
 
 class AssessmentController extends Controller
 {
@@ -19,9 +20,11 @@ class AssessmentController extends Controller
 
     public function insert(Request $request)
     {
+
+        $token = json_decode(base64_decode(explode(' ', $request->header('Authorization'))[1]));
         
         $response = Assessment::create([
-            'patients_id' => $request->patients_id,
+            'patient_id' => $request->patient_id,
             'date_enter_room' => $request->date_enter_room,
             'time_enter_room' => $request->time_enter_room,
             'time_assessment' => $request->time_assessment,
@@ -112,11 +115,35 @@ class AssessmentController extends Controller
             'result_problems_treatment' => $request->result_problems_treatment,
             'date_assessment_complete' => $request->date_assessment_complete,
             'time_assessment_complete' => $request->time_assessment_complete,
-            'users_id' => $request->users_id,
+            'user_id' => $token->id,
             'result_diagnose_treatment' => $request->result_diagnose_treatment,
             'result_goal_treatment' => $request->result_goal_treatment,
             'result_indicator_treatment' => $request->result_indicator_treatment,
             'result_intervention_treatment' => $request->result_intervention_treatment
+        ]);
+
+        // dd($response->id);
+
+        // TODO : insert ke tabel treatment juga
+        $treatment = TreatmentLog::create([
+            'user_id' => $token->id,
+            'treatment_date' => $request->date_assessment_complete,
+            'treatment_time' => $request->time_assessment_complete,
+            'result_subjective' => $request->subjective_complaint,
+            'result_objective' => $request->objective_complaint,
+            'result_blood_pressure' => $request->blood_pressure,
+            'result_circulation_pulse' => $request->circulation_pulse,
+            'result_breath_rr' => $request->breath_rr,
+            'result_breath_spo2' => $request->breath_spo2,
+            'result_temperature' => $request->temperature,
+            'result_gcs' => $request->num_gcs,
+            'result_presence_of_mind' => $request->type_presence_of_mind,
+            'result_urine_total' => $request->urine_total,
+            'result_urine_color' => $request->urine_color,
+            'result_assessment_problem' =>$request->result_problems_treatment,
+            'result_intervention' => $request->result_intervention_treatment,
+            'assessment_id' => $response->id,
+            'patient_id' => $request->patient_id
         ]);
 
         if ($response) {
@@ -140,7 +167,7 @@ class AssessmentController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Assessment found.',                
-                'data' => $asssessment
+                'data' => $asssessment->load(['user', 'patient'])
             ], 200);
         } else {
             return response()->json([
@@ -158,7 +185,7 @@ class AssessmentController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Assessment found.',
-                'data' => $asssessment
+                'data' => $asssessment->load(['user', 'patient'])
             ], 200);
         } else {
             return response()->json([
