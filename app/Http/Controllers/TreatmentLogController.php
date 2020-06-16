@@ -34,8 +34,8 @@ class TreatmentLogController extends Controller
             'result_temperature' => $request->result_temperature,
             'result_gcs' => $request->result_gcs,
             'result_presence_of_mind' => $request->result_presence_of_mind,
-            'result_urine_total' => $request->result_urine_total,
-            'result_urine_color' => $request->result_urine_color,
+            'result_others' => $request->result_others,
+            // 'result_urine_color' => $request->result_urine_color,
             'result_assessment_problem' =>$request->result_assessment_problem,
             'result_intervention' => $request->result_intervention,
             'assessment_id' => $request->assessment_id,
@@ -82,6 +82,24 @@ class TreatmentLogController extends Controller
                 'success' => true,
                 'message' => 'Treatment log found.',
                 'data' => $treatment
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Treatment log not found.'
+            ], 404);
+        }
+    }
+
+    public function remove(Request $request)
+    {
+        $treatment = TreatmentLog::find($request->id);
+        
+        if ($treatment) {
+            $treatment->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Treatment log deleted'
             ], 200);
         } else {
             return response()->json([

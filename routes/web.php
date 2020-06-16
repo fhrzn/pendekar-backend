@@ -70,6 +70,7 @@ $router->group(['prefix' => 'treatment'], function() use ($router) {
 
     $router->get('/', ['as' => 'treatment.all', 'uses' => 'TreatmentLogController@getAll']);
 
+    $router->get('/{id}/remove', ['as' => 'treatment.delete', 'uses' => 'TreatmentLogController@remove']);
 });
 
 $router->group(['prefix' => 'implement'], function() use ($router) {
